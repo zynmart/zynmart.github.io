@@ -1,6 +1,10 @@
 [[CURRENCIES]]
 code="ZYN"
 issuer="GAI2MNQ74QFJOXEGPV4NIZF2BSLEHRMH2Z73GJBRDLYURXRL3UNZ7ESG"
+display_decimals=2
 name="ZYNMART"
 desc="ZYNMART TOKENS"
 image="https://zynmart.github.io/ZYN.jpg"
+is_asset_with_backstop=true
+anchor_asset_type="other"
+fixed_number_of_coins=false
