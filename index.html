@@ -1,11 +1,64 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-    <title>Token (ZYN)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi-GitHub Connect</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 </head>
 <body>
-    <h1> Token (ZYN) is live on Pi Network Testnet!</h1>
-    <p>Check our <a href=".well-known/pi.toml">pi.toml</a> file.</p>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="container">
+        <div class="glass-card main-card">
+            <header class="header">
+                <div class="logo">π</div>
+                <h1>Pi-GitHub Connect</h1>
+                <p>اربط حسابك في Pi مع GitHub بسهولة</p>
+            </header>
+
+            <div id="auth-section" class="section">
+                <button id="btn-auth" class="btn btn-primary">تسجيل الدخول باستخدام Pi</button>
+            </div>
+
+            <div id="app-section" class="section hidden">
+                <div class="user-info">
+                    <span id="pi-username" class="badge">جاري التحميل...</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="github-username">اسم المستخدم في GitHub</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="github-username" placeholder="مثلاً: torvalds">
+                        <button id="btn-fetch" class="btn btn-secondary">جلب البيانات</button>
+                    </div>
+                </div>
+
+                <div id="github-result" class="github-card hidden">
+                    <img id="gh-avatar" src="" alt="Avatar">
+                    <div class="gh-details">
+                        <h3 id="gh-name"></h3>
+                        <p id="gh-bio"></p>
+                    </div>
+                </div>
+
+                <div class="payment-section">
+                    <button id="btn-pay" class="btn btn-accent">دفع 1 π للمتابعة</button>
+                </div>
+            </div>
+
+            <div id="status-message" class="status-msg"></div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
