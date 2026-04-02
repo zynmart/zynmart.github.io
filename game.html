@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ZYN Clicker - Tap to Earn</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --primary: #f59e0b; /* ZYN Gold */
+            --accent: #8b5cf6;
+            --text: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background: var(--glass);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .balance-container {
+            margin-top: 10px;
+        }
+
+        .balance {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .symbol {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .game-main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+        }
+
+        .circle-outer {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .circle-outer:active {
+            transform: scale(0.95);
+        }
+
+        .coin {
+            width: 220px;
+            height: 220px;
+            background: url('https://zynmart.github.io/ZYN.jpg') no-repeat center center;
+            background-size: cover;
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.2);
+            border: 8px solid var(--primary);
+        }
+
+        .stats-footer {
+            width: 100%;
+            padding: 30px 20px;
+            background: var(--glass);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .energy-bar-bg {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .energy-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+            width: 100%;
+            transition: width 0.3s;
+        }
+
+        .energy-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Floating numbers animation */
+        .tap-num {
+            position: absolute;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            pointer-events: none;
+            animation: floatUp 0.8s forwards;
+            opacity: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-150px); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 360px) {
+            .circle-outer { width: 220px; height: 220px; }
+            .coin { width: 180px; height: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="balance-container">
+            <span class="balance" id="balance">0</span>
+            <span class="symbol"> ZYN</span>
+        </div>
+        <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 5px;">أرباح تلقائية: 0 / ساعة</div>
+    </div>
+
+    <div class="game-main" id="coin-area">
+        <div class="circle-outer" id="main-coin">
+            <div class="coin"></div>
+        </div>
+    </div>
+
+    <div class="stats-footer">
+        <div class="energy-info">
+            <span>⚡ الطاقة: <span id="energy">1000</span>/1000</span>
+            <span>💎 المستوى 1</span>
+        </div>
+        <div class="energy-bar-bg">
+            <div class="energy-bar-fill" id="energy-fill"></div>
+        </div>
+        <div style="display: flex; justify-content: space-around;">
+            <button style="background:none; border:none; color:white; font-family:inherit; cursor:pointer;">🏠 الرئيسية</button>
+            <button style="background:none; border:none; color:white; font-family:inherit; cursor:pointer; opacity:0.5;">🚀 ترقيات</button>
+            <button style="background:none; border:none; color:white; font-family:inherit; cursor:pointer; opacity:0.5;">🫂 أصدقاء</button>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const userId = tg.initDataUnsafe?.user?.id || "910469328"; // تجريبي للمعاينة
+        const backendUrl = window.location.origin; // يفترض أن اللعبة تخدم من نفس الخادم
+
+        let balance = 0;
+        let energy = 1000;
+        let maxEnergy = 1000;
+        let profitPerHour = 0;
+        let rewardPerTap = 1;
+
+        const balanceEl = document.getElementById('balance');
+        const energyEl = document.getElementById('energy');
+        const energyFill = document.getElementById('energy-fill');
+        const coinArea = document.getElementById('coin-area');
+        const mainCoin = document.getElementById('main-coin');
+
+        // جلب البيانات من السيرفر
+        async function loadGame() {
+            try {
+                const response = await fetch(`${backendUrl}/api/user/${userId}`);
+                const data = await response.json();
+                
+                if (data) {
+                    balance = data.balance;
+                    energy = data.energy;
+                    profitPerHour = data.profitPerHour || 0;
+                    
+                    // حساب الأرباح التلقائية أثناء الغياب
+                    const now = Date.now();
+                    const passedTime = (now - data.lastUpdate) / 1000; // بالثواني
+                    const earnings = (profitPerHour / 3600) * passedTime;
+                    
+                    if (earnings > 0.1) {
+                        balance += earnings;
+                        tg.showAlert(`🚀 مرحباً بك مجدداً! لقد ربحت ${earnings.toFixed(2)} ZYN أثناء غيابك.`);
+                    }
+                }
+                updateUI();
+            } catch (e) {
+                console.error("Load error:", e);
+                // Fallback to local
+                balance = parseFloat(localStorage.getItem('zyn_balance') || 0);
+                updateUI();
+            }
+        }
+
+        async function saveGame() {
+            try {
+                await fetch(`${backendUrl}/api/save`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: userId,
+                        gameData: { balance, energy, profitPerHour }
+                    })
+                });
+            } catch (e) {}
+        }
+
+        mainCoin.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            handleTap(touch.clientX, touch.clientY);
+        });
+
+        mainCoin.addEventListener('mousedown', (e) => {
+            handleTap(e.clientX, e.clientY);
+        });
+
+        function handleTap(x, y) {
+            if (energy < rewardPerTap) return;
+
+            balance += rewardPerTap;
+            energy -= rewardPerTap;
+            
+            updateUI();
+            showTapNumber(x, y);
+            
+            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            localStorage.setItem('zyn_balance', balance);
+        }
+
+        function updateUI() {
+            balanceEl.innerText = balance.toFixed(2);
+            energyEl.innerText = Math.floor(energy);
+            energyFill.style.width = (energy / maxEnergy * 100) + '%';
+        }
+
+        function showTapNumber(x, y) {
+            const num = document.createElement('div');
+            num.className = 'tap-num';
+            num.innerText = '+' + rewardPerTap;
+            num.style.left = x + 'px';
+            num.style.top = y + 'px';
+            document.body.appendChild(num);
+            setTimeout(() => num.remove(), 800);
+        }
+
+        // استعادة الطاقة وتحديث الأرباح التلقائية
+        setInterval(() => {
+            if (energy < maxEnergy) {
+                energy = Math.min(maxEnergy, energy + 1.5); // تجديد أسرع قليلاً
+            }
+            if (profitPerHour > 0) {
+                balance += (profitPerHour / 3600);
+            }
+            updateUI();
+        }, 1000);
+
+        // حفظ تلقائي كل 10 ثوانٍ
+        setInterval(saveGame, 10000);
+
+        loadGame();
+    </script>
+</body>
+</html>
