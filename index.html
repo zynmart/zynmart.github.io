@@ -3,62 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pi-GitHub Connect</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ZynMart | Gateway</title>
+    <!-- Redirect to Pi App -->
+    <meta http-equiv="refresh" content="3;url=https://zynmart8674.pinet.com">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #064e3b;
+            --accent: #f59e0b;
+            --bg: #020617;
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --text: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: radial-gradient(circle at top right, #064e3b 0%, #020617 40%),
+                        radial-gradient(circle at bottom left, #1e1b4b 0%, #020617 40%);
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 30px;
+            padding: 5px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .loader {
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+
+        .footer-text {
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
 </head>
 <body>
-    <div class="background-blobs">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+    <div class="container">
+        <div class="glass-card">
+            <div class="logo-container">
+                <img src="ZYN.png" alt="ZYN Logo">
+            </div>
+            <h1>ZYNMART</h1>
+            <p>جاري تحويلك إلى تطبيق ZynMart في متصفح Pi...</p>
+            
+            <a href="https://zynmart8674.pinet.com" class="btn">دخول التطبيق الآن</a>
+            
+            <div class="loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+        <div class="footer-text" style="text-align: center;">Powered by Pi Network</div>
     </div>
 
-    <main class="container">
-        <div class="glass-card main-card">
-            <header class="header">
-                <div class="logo">π</div>
-                <h1>Pi-GitHub Connect</h1>
-                <p>اربط حسابك في Pi مع GitHub بسهولة</p>
-            </header>
-
-            <div id="auth-section" class="section">
-                <button id="btn-auth" class="btn btn-primary">تسجيل الدخول باستخدام Pi</button>
-            </div>
-
-            <div id="app-section" class="section hidden">
-                <div class="user-info">
-                    <span id="pi-username" class="badge">جاري التحميل...</span>
-                </div>
-
-                <div class="input-group">
-                    <label for="github-username">اسم المستخدم في GitHub</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="github-username" placeholder="مثلاً: torvalds">
-                        <button id="btn-fetch" class="btn btn-secondary">جلب البيانات</button>
-                    </div>
-                </div>
-
-                <div id="github-result" class="github-card hidden">
-                    <img id="gh-avatar" src="" alt="Avatar">
-                    <div class="gh-details">
-                        <h3 id="gh-name"></h3>
-                        <p id="gh-bio"></p>
-                    </div>
-                </div>
-
-                <div class="payment-section">
-                    <button id="btn-pay" class="btn btn-accent">دفع 1 π للمتابعة</button>
-                </div>
-            </div>
-
-            <div id="status-message" class="status-msg"></div>
-        </div>
-    </main>
-
-    <script src="script.js"></script>
+    <script>
+        // Force immediate redirect if JS is enabled
+        setTimeout(function() {
+            window.location.href = "https://zynmart8674.pinet.com";
+        }, 3000);
+    </script>
 </body>
 </html>
