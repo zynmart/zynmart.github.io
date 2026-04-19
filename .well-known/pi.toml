@@ -1,6 +1,12 @@
+VERSION="1.0.0"
+
+[[PRINCIPALS]]
+name="ZynMart"
+email="support@zynmart.github.io"
+
 [[CURRENCIES]]
 code="ZYN"
 issuer="GAI2MNQ74QFJOXEGPV4NIZF2BSLEHRMH2Z73GJBRDLYURXRL3UNZ7ESG"
-name="ZYNMART"
-desc="ZYNMART TOKENS"
+name="ZynMart"
+desc="ZYN is the utility token of ZynMart — a Pi Network-based marketplace app."
 image="https://zynmart.github.io/ZYN.jpg"
