@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZynMart | Gateway</title>
-    <!-- Redirect to Pi App -->
-    <meta http-equiv="refresh" content="3;url=https://zynmart8674.pinet.com">
+    <!-- Redirect to Pi Browser -->
+    <meta http-equiv="refresh" content="3;url=pi://zynmart8674.pinet.com">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -161,9 +161,9 @@
                 <img src="ZYN.png" alt="ZYN Logo">
             </div>
             <h1>ZynMart</h1>
-            <p>Redirecting you to the ZynMart application in Pi Browser...</p>
+            <p>Launching the application in Pi Browser...</p>
             
-            <a href="https://zynmart8674.pinet.com" class="btn">Launch App Now</a>
+            <a href="pi://zynmart8674.pinet.com" class="btn">Open Pi Browser</a>
             
             <div class="loader">
                 <div class="dot"></div>
@@ -175,9 +175,9 @@
     </div>
 
     <script>
-        // Force immediate redirect if JS is enabled
+        // Use pi:// protocol to force open in Pi Browser
         setTimeout(function() {
-            window.location.href = "https://zynmart8674.pinet.com";
+            window.location.href = "pi://zynmart8674.pinet.com";
         }, 3000);
     </script>
 </body>
